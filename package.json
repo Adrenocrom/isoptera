@@ -1,0 +1,16 @@
+{
+	"name": "isoptera",
+	"displayName": "isoptera",
+	"version": "0.0.1",
+	"description": "litte game from alaun",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server/server.js",
+		"test": "echo \"Error: no test specified jet\" && exit 1"
+	},
+	"author": "Josef Schulz",
+	"dependencies": {
+		"ws": "^7.1.0",
+		"elasticsearch": "^16.3.0"
+	}
+}
