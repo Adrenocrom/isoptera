@@ -48,8 +48,42 @@ function main() {
 
 		varying vec2 vTextureCoord;
 
+		struct complex {
+			float a;
+			float b;
+		};
+
+		complex mult(complex a, complex b) {
+			complex result;
+			result.a = ((a.a*b.a) - (a.b*b.b));
+			result.b = ((a.a*b.b) + (a.b*b.a));
+			return result;
+		}
+
+		float cabs(complex a) {
+			return sqrt((a.a*a.a) + (a.b*a.b));
+		}
+
+		float calcColor(vec2 coord) {
+			complex z;
+			z.a = 0.0;
+			z.b = 0.0;
+
+			for(float i = 0.0; i <= 34.0; i += 1.0) {
+				if(z.a*z.a + z.b*z.b > 4.0)
+					return i/33.0;
+				z = mult(z, z);
+				z.a += ((coord.s * 2.0) - 1.5);
+				z.b += ((coord.t * 2.0) - 1.0);
+			}
+			
+			return 0.0;
+		}
+
 		void main() {
-    	    gl_FragColor = texture2D(uColorSampler, vec2(vTextureCoord.s * (1.0/8.0), vTextureCoord.t * 0.5) + vTextureOffset);
+    	    //gl_FragColor = texture2D(uColorSampler, vec2(vTextureCoord.s * (1.0/8.0), vTextureCoord.t * 0.5) + vTextureOffset);
+			float color = calcColor(vTextureCoord.st);
+			gl_FragColor = vec4(0.0, color, color, 1.0);
 		}	
 	`);
 
@@ -112,9 +146,9 @@ function drawScene() {
 	mat4.perspective(projectionMatrix, muGl.degToRad(45), gl.viewportWidth/gl.viewportHeight, 0.1, 100.0);
 
 	const modelViewMatrix = mat4.create();
-	mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -6.0]);
-	mat4.rotateZ(modelViewMatrix, modelViewMatrix, muGl.degToRad(angle));
-	mat4.rotateZ(modelViewMatrix, modelViewMatrix, muGl.degToRad(90));
+	mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -3.0]);
+	//mat4.rotateZ(modelViewMatrix, modelViewMatrix, muGl.degToRad(angle));
+	mat4.rotateZ(modelViewMatrix, modelViewMatrix, muGl.degToRad(-90));
 
 	gl.uniform2f(shaderProgram.textureOffsetUniform, parseFloat(counter / 8), 0);
 
