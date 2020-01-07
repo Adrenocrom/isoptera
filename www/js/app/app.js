@@ -10,7 +10,7 @@ var counter = 0;
 main();
 
 function main() {
-	//muSWUpdater("muReload");
+	muSWUpdater("muReload");
 
 	const canvas = document.getElementById('canvas');
 	canvas.width = window.innerWidth;
@@ -73,7 +73,7 @@ function main() {
 				if(z.a*z.a + z.b*z.b > 4.0)
 					return i/33.0;
 				z = mult(z, z);
-				z.a += ((coord.s * 2.0) - 1.5);
+				z.a += ((coord.s * 2.0) - 1.9);
 				z.b += ((coord.t * 2.0) - 1.0);
 			}
 			
@@ -83,7 +83,7 @@ function main() {
 		void main() {
     	    //gl_FragColor = texture2D(uColorSampler, vec2(vTextureCoord.s * (1.0/8.0), vTextureCoord.t * 0.5) + vTextureOffset);
 			float color = calcColor(vTextureCoord.st);
-			gl_FragColor = vec4(0.0, color, color, 1.0);
+			gl_FragColor = vec4(0.0, color*0.7, color*0.3, 1.0);
 		}	
 	`);
 

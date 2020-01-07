@@ -1,4 +1,4 @@
-var version = "0.0.35";
+var version = "0.0.36";
 var cacheName = "isoptera";
 
 self.addEventListener('install', function(event) {
@@ -8,9 +8,9 @@ self.addEventListener('install', function(event) {
 			return cache.addAll([
 				"/",
             	"/css/style.css",
-				"/js/a3Utils.js",
-				"/js/a3Gl.js",
-				"/js/app.js",
+				"/js/app/muskatUtils.js",
+				"/js/app/muskatGl.js",
+				"/js/app/app.js",
 				"/js/lib/gl-matrix-min.js",
             	"/img/logo.png",
             	"/img/kiste.png",
