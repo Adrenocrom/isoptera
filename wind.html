@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>wind calcer</title>
+		<meta charset="utf-8" />
+	</head>
+	<body>
+		<canvas id="a3Diagram" width="640" height="480"></canvas>
+		<script>
+			var diagram = document.getElementById("a3Diagram");
+			var w = diagram.width;
+			var h = diagram.height;
+			var ctx = diagram.getContext("2d");
+
+			function line(sw, sh, ew, eh) {
+				ctx.moveTo(sw, sh);
+				ctx.lineTo(ew, eh);
+				ctx.stroke();
+			}
+
+			function yaxis(label) {
+				line(10, h-10, 10, 10);
+				line(8, 14, 10, 10);
+				line(12, 14, 10, 10);
+
+				if(label)
+					ctx.fillText(label, 12, 10);
+			}
+
+			function xaxis(label) {
+				line(10, h-10, w-10, h-10);
+				line(w-14, h-12, w-10, h-10);
+				line(w-14, h-8, w-10, h-10);
+
+				if(label)
+					ctx.fillText(label, w-20, h-15);
+			}
+
+			xaxis("m/s");
+			yaxis("P");
+
+			var min = 0;
+			var max = 20;
+			var steps = 20;
+			var step = (max-min)/steps;
+			var	pstep = (w-20)/steps;
+			var first = true;
+	
+			function plotP(r, strokeStyle = "black") {
+				ctx.beginPath();
+				ctx.strokeStyle = strokeStyle;
+				ctx.moveTo(10, h-10);
+				var d = 1.2041; // density
+				var Pc = 0.5 * d * r*r * Math.PI;
+				for(var i = min; i <= max; i+=step) {
+					var v = i;
+					var P = Pc * Math.pow(i, 3);
+					console.log("r: " + r + " v: " + v + " P: " + P);
+					
+					var x = i * pstep + 10;
+					var y = h-10-P*0.5;
+					ctx.lineTo(x, y);
+					ctx.stroke();
+				}
+			}
+
+			plotP(0.22);
+			plotP(0.5, "red");
+			plotP(1, "green");
+			plotP(1.5, "purple");
+		</script>
+	</body>
+</html>
